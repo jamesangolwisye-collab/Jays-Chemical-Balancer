@@ -1,1 +1,1 @@
-# Jays-Chemical--Balancer
+# Jays-Chemical-Balancer
