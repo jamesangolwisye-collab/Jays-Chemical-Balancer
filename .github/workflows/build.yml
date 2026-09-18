@@ -26,9 +26,15 @@ jobs:
         pip install buildozer cython
 
     - name: Build with Buildozer
+      env:
+        BUILDOZER_ACCEPT_SDK_LICENSES: 1
       run: |
-        # Pre-accept licenses automatically during the build process
-        yes | buildozer -v android debug
+        # Initialize Android SDK structure and pre-accept license hashes
+        mkdir -p ~/.buildozer/android/platform/android-sdk/licenses
+        printf "\n247721277a71920e0321c0b088bf7ad2223539e6\n89330172875f101536f35cdb58e2d22b28c21a32\ne6756711483824f7317f367e75473a67d2b6d582\n8a51a4f001b47d8009d130573e35a56e77542d95\nd56f5187479451eabf01fb78af6dfcb131a6481e\n24333f8a63b6825ea9c5514f83c2829b004d1fee" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
+        printf "\n84831b9409646a918e30573bab4c9c91346d8abd" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-preview-license
+        
+        buildozer -v android debug
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
